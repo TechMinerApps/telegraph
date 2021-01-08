@@ -58,7 +58,7 @@ func makeRequest(path string, payload interface{}) ([]byte, error) {
 	resp := http.AcquireResponse()
 	defer http.ReleaseResponse(resp)
 
-	if err := http.Do(req, resp); err != nil {
+	if err := c.Do(req, resp); err != nil {
 		return nil, err
 	}
 
