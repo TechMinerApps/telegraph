@@ -4,10 +4,9 @@ import (
 	"encoding/json"
 	"errors"
 
-	ht "net/http"
-
 	jsoniter "github.com/json-iterator/go"
 	http "github.com/valyala/fasthttp"
+	"github.com/valyala/fasthttp/fasthttpproxy"
 )
 
 // Response contains a JSON object, which always has a Boolean field ok. If ok equals true, the request was
@@ -20,14 +19,27 @@ type Response struct {
 }
 
 var parser = jsoniter.ConfigFastest //nolint:gochecknoglobals
+var c = &http.Client{}
+
+// "localhost:9050"
+func SetSocksDialer(proxy string) {
+	c = &http.Client{
+		Dial: fasthttpproxy.FasthttpSocksDialer(proxy),
+	}
+}
+
+// "username:password@localhost:9050"
+func SetHttpDialer(proxy string) {
+	c = &http.Client{
+		Dial: fasthttpproxy.FasthttpHTTPDialer(proxy),
+	}
+}
 
 func makeRequest(path string, payload interface{}) ([]byte, error) {
 	src, err := parser.Marshal(payload)
 	if err != nil {
 		return nil, err
 	}
-
-	ht.ProxyFromEnvironment()
 
 	u := http.AcquireURI()
 	defer http.ReleaseURI(u)

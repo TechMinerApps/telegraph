@@ -7,6 +7,7 @@ require (
 	github.com/modern-go/reflect2 v1.0.1 // indirect
 	github.com/stretchr/testify v1.3.0
 	github.com/valyala/fasthttp v1.14.0
+	gitlab.com/toby3d/telegraph v1.2.1
 	golang.org/x/net v0.0.0-20200602114024-627f9648deb9
 )
 
