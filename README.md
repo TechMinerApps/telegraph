@@ -1,3 +1,5 @@
+**Notice** This is just a fork for myself to add proxy from enviorment. The all code is from https://gitlab.com/toby3d/telegraph
+
 # GoLang bindings for the Telegraph API [![discord](https://discordapp.com/api/guilds/208605007744860163/widget.png)](https://discord.gg/QJ8z5BN)
 > This project is just to provide a wrapper around the API without any additional features.
 

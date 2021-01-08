@@ -1,4 +1,4 @@
-module gitlab.com/toby3d/telegraph
+module github.com/abserari/telegraph
 
 require (
 	github.com/json-iterator/go v1.1.10

@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"errors"
 
+	ht "net/http"
+
 	jsoniter "github.com/json-iterator/go"
 	http "github.com/valyala/fasthttp"
 )
@@ -24,6 +26,8 @@ func makeRequest(path string, payload interface{}) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	ht.ProxyFromEnvironment()
 
 	u := http.AcquireURI()
 	defer http.ReleaseURI(u)
