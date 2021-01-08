@@ -1,4 +1,4 @@
-module github.com/abserari/telegraph/v1.1.0
+module github.com/abserari/telegraph
 
 require (
 	github.com/json-iterator/go v1.1.10
