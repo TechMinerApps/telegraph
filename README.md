@@ -12,6 +12,11 @@ Download and install it:
 Import it in your code:
 `import "gitlab.com/toby3d/telegraph"`
 
+Use Proxy
+`telegraph.SetSocksDialer("localhost:7890")`
+`telegraph.SetHttpDialer("username:password@localhost:9050")`
+
+
 ## Examples
 See [GoDoc examples section](https://godoc.org/gitlab.com/toby3d/telegraph#pkg-examples) or check [example_test.go](/example_test.go).
 
