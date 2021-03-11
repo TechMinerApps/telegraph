@@ -1,6 +1,7 @@
 **Notice** This is just a fork for myself to add proxy from enviorment. The all code is from https://gitlab.com/toby3d/telegraph
 
 # GoLang bindings for the Telegraph API [![discord](https://discordapp.com/api/guilds/208605007744860163/widget.png)](https://discord.gg/QJ8z5BN)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FTechMinerApps%2Ftelegraph.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FTechMinerApps%2Ftelegraph?ref=badge_shield)
 > This project is just to provide a wrapper around the API without any additional features.
 
 All methods and types available and this library (possibly) is ready for use in production. Yaay!
@@ -23,3 +24,6 @@ See [GoDoc examples section](https://godoc.org/gitlab.com/toby3d/telegraph#pkg-e
 ## Need help?
 - [Open new issue](https://gitlab.com/toby3d/telegraph/issues/new)
 - [Discuss in Discord](https://discord.gg/QJ8z5BN)
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FTechMinerApps%2Ftelegraph.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FTechMinerApps%2Ftelegraph?ref=badge_large)
