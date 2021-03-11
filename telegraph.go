@@ -3,6 +3,7 @@ package telegraph
 import (
 	"encoding/json"
 	"errors"
+	"strings"
 
 	jsoniter "github.com/json-iterator/go"
 	http "github.com/valyala/fasthttp"
@@ -21,15 +22,15 @@ type Response struct {
 var parser = jsoniter.ConfigFastest //nolint:gochecknoglobals
 var c = &http.Client{}
 
-// "localhost:9050"
-func SetSocksDialer(proxy string) {
+// SetSocksProxy change the dialer in http client
+func SetSocksProxy(proxy string) {
 	c = &http.Client{
 		Dial: fasthttpproxy.FasthttpSocksDialer(proxy),
 	}
 }
 
-// "username:password@localhost:9050"
-func SetHttpDialer(proxy string) {
+// SetHTTPProxy set dialer in http client to a http proxy
+func SetHTTPProxy(proxy string) {
 	c = &http.Client{
 		Dial: fasthttpproxy.FasthttpHTTPDialer(proxy),
 	}
@@ -51,7 +52,7 @@ func makeRequest(path string, payload interface{}) ([]byte, error) {
 	defer http.ReleaseRequest(req)
 	req.SetRequestURIBytes(u.FullURI())
 	req.Header.SetMethod(http.MethodPost)
-	req.Header.SetUserAgent("toby3d/telegraph")
+	req.Header.SetUserAgent("TechMinerApps/telegraph")
 	req.Header.SetContentType("application/json")
 	req.SetBody(src)
 
@@ -68,7 +69,10 @@ func makeRequest(path string, payload interface{}) ([]byte, error) {
 	}
 
 	if !r.Ok {
-		return nil, errors.New(r.Error) //nolint: goerr113
+		if strings.Contains(r.Error, "FLOOD_WAIT") {
+			return nil, ErrFloodWait
+		}
+		return nil, errors.New(r.Error)
 	}
 
 	return r.Result, nil

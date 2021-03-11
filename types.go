@@ -123,4 +123,7 @@ var (
 
 	// ErrNoInputData is returned when any method get nil argument.
 	ErrNoInputData = errors.New("no input data")
+
+	// ErrFloodWait is returned when recieving a flood error
+	ErrFloodWait = errors.New("reaching telegraph flood limit")
 )
