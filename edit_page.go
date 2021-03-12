@@ -29,9 +29,9 @@ type editPage struct {
 }
 
 // EditPage edit an existing Telegraph page. On success, returns a Page object.
-func (a *Account) EditPage(update Page, returnContent bool) (*Page, error) {
-	data, err := makeRequest(path.Join("editPage", update.Path), editPage{
-		AccessToken:   a.AccessToken,
+func (c *client) EditPage(update Page, returnContent bool) (*Page, error) {
+	data, err := c.makeRequest(path.Join("editPage", update.Path), editPage{
+		AccessToken:   c.Account.AccessToken,
 		Path:          update.Path,
 		Title:         update.Title,
 		Content:       update.Content,

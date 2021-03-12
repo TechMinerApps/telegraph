@@ -14,7 +14,7 @@ type getPage struct {
 
 // GetPage get a Telegraph page. Returns a Page object on success.
 func (c *client) GetPage(path string, returnContent bool) (*Page, error) {
-	data, err := makeRequest(gopath.Join("getPage", path), getPage{
+	data, err := c.makeRequest(gopath.Join("getPage", path), getPage{
 		Path:          path,
 		ReturnContent: returnContent,
 	})

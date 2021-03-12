@@ -17,9 +17,9 @@ type editAccountInfo struct {
 
 // EditAccountInfo update information about a Telegraph account. Pass only the parameters that you want to edit. On
 // success, returns an Account object with the default fields.
-func (a *Account) EditAccountInfo(update Account) (*Account, error) {
-	data, err := makeRequest("editAccountInfo", editAccountInfo{
-		AccessToken: a.AccessToken,
+func (c *client) EditAccountInfo(update Account) (*Account, error) {
+	data, err := c.makeRequest("editAccountInfo", editAccountInfo{
+		AccessToken: c.Account.AccessToken,
 		ShortName:   update.ShortName,
 		AuthorName:  update.AuthorName,
 		AuthorURL:   update.AuthorURL,

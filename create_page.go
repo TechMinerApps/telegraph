@@ -22,9 +22,9 @@ type createPage struct {
 }
 
 // CreatePage create a new Telegraph page. On success, returns a Page object.
-func (a *Account) CreatePage(page Page, returnContent bool) (*Page, error) {
-	data, err := makeRequest("createPage", createPage{
-		AccessToken:   a.AccessToken,
+func (c *client) CreatePage(page Page, returnContent bool) (*Page, error) {
+	data, err := c.makeRequest("createPage", createPage{
+		AccessToken:   c.Account.AccessToken,
 		Title:         page.Title,
 		AuthorName:    page.AuthorName,
 		AuthorURL:     page.AuthorURL,

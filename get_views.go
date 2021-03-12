@@ -36,7 +36,7 @@ func (c *client) GetViews(path string, date time.Time) (*PageViews, error) {
 		p.Hour = date.Hour()
 	}
 
-	data, err := makeRequest(gopath.Join("getViews", path), p)
+	data, err := c.makeRequest(gopath.Join("getViews", path), p)
 	if err != nil {
 		return nil, err
 	}

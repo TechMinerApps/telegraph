@@ -13,9 +13,9 @@ type getPageList struct {
 
 // GetPageList get a list of pages belonging to a Telegraph account. Returns a PageList object, sorted by most
 // recently created pages first.
-func (a *Account) GetPageList(offset, limit int) (*PageList, error) {
-	data, err := makeRequest("getPageList", getPageList{
-		AccessToken: a.AccessToken,
+func (c *client) GetPageList(offset, limit int) (*PageList, error) {
+	data, err := c.makeRequest("getPageList", getPageList{
+		AccessToken: c.Account.AccessToken,
 		Offset:      offset,
 		Limit:       limit,
 	})

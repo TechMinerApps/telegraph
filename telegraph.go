@@ -11,23 +11,22 @@ import (
 )
 
 var parser = jsoniter.ConfigFastest //nolint:gochecknoglobals
-var c = &http.Client{}
 
 // SetSocksProxy change the dialer in http client
-func SetSocksProxy(proxy string) {
-	c = &http.Client{
+func (c *client) SetSocksProxy(proxy string) {
+	c.httpClient = &http.Client{
 		Dial: fasthttpproxy.FasthttpSocksDialer(proxy),
 	}
 }
 
 // SetHTTPProxy set dialer in http client to a http proxy
-func SetHTTPProxy(proxy string) {
-	c = &http.Client{
+func (c *client) SetHTTPProxy(proxy string) {
+	c.httpClient = &http.Client{
 		Dial: fasthttpproxy.FasthttpHTTPDialer(proxy),
 	}
 }
 
-func makeRequest(path string, payload interface{}) ([]byte, error) {
+func (c *client) makeRequest(path string, payload interface{}) ([]byte, error) {
 	src, err := parser.Marshal(payload)
 	if err != nil {
 		return nil, err
@@ -50,7 +49,7 @@ func makeRequest(path string, payload interface{}) ([]byte, error) {
 	resp := http.AcquireResponse()
 	defer http.ReleaseResponse(resp)
 
-	if err := c.Do(req, resp); err != nil {
+	if err := c.httpClient.Do(req, resp); err != nil {
 		return nil, err
 	}
 
@@ -73,8 +72,10 @@ type Client interface {
 	Client() *http.Client
 	ContentFormat(data interface{}) (n []Node, err error)
 	CreateAccount(account Account) (*Account, error)
+	CreatePage(page Page, returnContent bool) (*Page, error)
 	GetViews(path string, date time.Time) (*PageViews, error)
 	GetPage(path string, returnContent bool) (*Page, error)
+	RevokeAccessToken() (*Account, error)
 }
 
 type client struct {

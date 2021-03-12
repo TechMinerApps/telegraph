@@ -17,7 +17,7 @@ type createAccount struct {
 // administrators who would like to keep individual author names and profile links for each of their channels. On
 // success, returns an Account object with the regular fields and an additional access_token field.
 func (c *client) CreateAccount(account Account) (*Account, error) {
-	data, err := makeRequest("createAccount", createAccount{
+	data, err := c.makeRequest("createAccount", createAccount{
 		ShortName:  account.ShortName,
 		AuthorName: account.AuthorName,
 		AuthorURL:  account.AuthorURL,
