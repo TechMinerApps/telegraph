@@ -25,7 +25,7 @@ type getViews struct {
 
 // GetViews get the number of views for a Telegraph article. By default, the total number of page views will be
 // returned. Returns a PageViews object on success.
-func GetViews(path string, date time.Time) (*PageViews, error) {
+func (c *client) GetViews(path string, date time.Time) (*PageViews, error) {
 	p := new(getViews)
 	p.Path = path
 

@@ -16,7 +16,7 @@ type createAccount struct {
 // CreateAccount create a new Telegraph account. Most users only need one account, but this can be useful for channel
 // administrators who would like to keep individual author names and profile links for each of their channels. On
 // success, returns an Account object with the regular fields and an additional access_token field.
-func CreateAccount(account Account) (*Account, error) {
+func (c *client) CreateAccount(account Account) (*Account, error) {
 	data, err := makeRequest("createAccount", createAccount{
 		ShortName:  account.ShortName,
 		AuthorName: account.AuthorName,

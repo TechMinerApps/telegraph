@@ -1,23 +1,14 @@
 package telegraph
 
 import (
-	"encoding/json"
 	"errors"
 	"strings"
+	"time"
 
 	jsoniter "github.com/json-iterator/go"
 	http "github.com/valyala/fasthttp"
 	"github.com/valyala/fasthttp/fasthttpproxy"
 )
-
-// Response contains a JSON object, which always has a Boolean field ok. If ok equals true, the request was
-// successful, and the result of the query can be found in the result field. In case of an unsuccessful request, ok
-// equals false, and the error is explained in the error field (e.g. SHORT_NAME_REQUIRED).
-type Response struct {
-	Ok     bool            `json:"ok"`
-	Error  string          `json:"error,omitempty"`
-	Result json.RawMessage `json:"result,omitempty"`
-}
 
 var parser = jsoniter.ConfigFastest //nolint:gochecknoglobals
 var c = &http.Client{}
@@ -76,4 +67,37 @@ func makeRequest(path string, payload interface{}) ([]byte, error) {
 	}
 
 	return r.Result, nil
+}
+
+type Client interface {
+	Client() *http.Client
+	ContentFormat(data interface{}) (n []Node, err error)
+	CreateAccount(account Account) (*Account, error)
+	GetViews(path string, date time.Time) (*PageViews, error)
+	GetPage(path string, returnContent bool) (*Page, error)
+}
+
+type client struct {
+	httpClient *http.Client
+	Account    *Account
+}
+
+func (c *client) Client() *http.Client {
+	return c.httpClient
+}
+
+func NewClient() (Client, error) {
+	cc := &client{
+		httpClient: &http.Client{},
+		Account: &Account{
+			AccessToken: "",
+			AuthURL:     "",
+			ShortName:   "",
+			AuthorName:  "",
+			AuthorURL:   "",
+			PageCount:   0,
+		},
+	}
+
+	return cc, nil
 }

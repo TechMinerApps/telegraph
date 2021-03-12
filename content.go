@@ -9,7 +9,7 @@ import (
 )
 
 // ContentFormat transforms data to a DOM-based format to represent the content of the page.
-func ContentFormat(data interface{}) (n []Node, err error) {
+func (c *client) ContentFormat(data interface{}) (n []Node, err error) {
 	var dst *html.Node
 
 	switch src := data.(type) {
