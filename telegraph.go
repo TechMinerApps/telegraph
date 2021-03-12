@@ -69,28 +69,37 @@ func (c *client) makeRequest(path string, payload interface{}) ([]byte, error) {
 }
 
 type Client interface {
+	Account() *Account
 	Client() *http.Client
 	ContentFormat(data interface{}) (n []Node, err error)
 	CreateAccount(account Account) (*Account, error)
 	CreatePage(page Page, returnContent bool) (*Page, error)
-	GetViews(path string, date time.Time) (*PageViews, error)
+	EditAccountInfo(update Account) (*Account, error)
+	EditPage(update Page, returnContent bool) (*Page, error)
+	GetAccountInfo(fields ...string) (*Account, error)
 	GetPage(path string, returnContent bool) (*Page, error)
+	GetPageList(offset, limit int) (*PageList, error)
+	GetViews(path string, date time.Time) (*PageViews, error)
 	RevokeAccessToken() (*Account, error)
 }
 
 type client struct {
 	httpClient *http.Client
-	Account    *Account
+	account    *Account
 }
 
 func (c *client) Client() *http.Client {
 	return c.httpClient
 }
 
+func (c *client) Account() *Account {
+	return c.account
+}
+
 func NewClient() (Client, error) {
-	cc := &client{
+	c := &client{
 		httpClient: &http.Client{},
-		Account: &Account{
+		account: &Account{
 			AccessToken: "",
 			AuthURL:     "",
 			ShortName:   "",
@@ -100,5 +109,5 @@ func NewClient() (Client, error) {
 		},
 	}
 
-	return cc, nil
+	return c, nil
 }

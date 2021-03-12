@@ -10,7 +10,7 @@ type revokeAccessToken struct {
 // success, returns an Account object with new access_token and auth_url fields.
 func (c *client) RevokeAccessToken() (*Account, error) {
 	resp, err := c.makeRequest("revokeAccessToken", revokeAccessToken{
-		AccessToken: c.Account.AccessToken,
+		AccessToken: c.Account().AccessToken,
 	})
 	if err != nil {
 		return nil, err

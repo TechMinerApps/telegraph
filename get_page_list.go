@@ -15,7 +15,7 @@ type getPageList struct {
 // recently created pages first.
 func (c *client) GetPageList(offset, limit int) (*PageList, error) {
 	data, err := c.makeRequest("getPageList", getPageList{
-		AccessToken: c.Account.AccessToken,
+		AccessToken: c.Account().AccessToken,
 		Offset:      offset,
 		Limit:       limit,
 	})

@@ -19,7 +19,7 @@ type editAccountInfo struct {
 // success, returns an Account object with the default fields.
 func (c *client) EditAccountInfo(update Account) (*Account, error) {
 	data, err := c.makeRequest("editAccountInfo", editAccountInfo{
-		AccessToken: c.Account.AccessToken,
+		AccessToken: c.Account().AccessToken,
 		ShortName:   update.ShortName,
 		AuthorName:  update.AuthorName,
 		AuthorURL:   update.AuthorURL,

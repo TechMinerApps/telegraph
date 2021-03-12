@@ -24,7 +24,7 @@ type createPage struct {
 // CreatePage create a new Telegraph page. On success, returns a Page object.
 func (c *client) CreatePage(page Page, returnContent bool) (*Page, error) {
 	data, err := c.makeRequest("createPage", createPage{
-		AccessToken:   c.Account.AccessToken,
+		AccessToken:   c.Account().AccessToken,
 		Title:         page.Title,
 		AuthorName:    page.AuthorName,
 		AuthorURL:     page.AuthorURL,

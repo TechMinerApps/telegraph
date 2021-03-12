@@ -11,7 +11,7 @@ type getAccountInfo struct {
 // GetAccountInfo get information about a Telegraph account. Returns an Account object on success.
 func (c *client) GetAccountInfo(fields ...string) (*Account, error) {
 	data, err := c.makeRequest("getAccountInfo", getAccountInfo{
-		AccessToken: c.Account.AccessToken,
+		AccessToken: c.Account().AccessToken,
 		Fields:      fields,
 	})
 	if err != nil {
