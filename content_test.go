@@ -3,26 +3,51 @@ package telegraph_test
 import (
 	"testing"
 
-	"github.com/stretchr/testify/assert"
-	"gitlab.com/toby3d/telegraph"
+	"github.com/TechMinerApps/telegraph"
 )
 
-func TestContentFormat(t *testing.T) {
-	t.Run("invalid", func(t *testing.T) {
-		_, err := telegraph.ContentFormat(42)
-		assert.EqualError(t, telegraph.ErrInvalidDataType, err.Error())
-	})
-
-	t.Run("valid", func(t *testing.T) {
-		t.Run("string", func(t *testing.T) {
-			validContentDOM, err := telegraph.ContentFormat(`<p>Hello, World!</p>`)
-			assert.NoError(t, err)
-			assert.NotEmpty(t, validContentDOM)
+func Test_client_ContentFormat(t *testing.T) {
+	type args struct {
+		data interface{}
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+		{
+			name: "Invalid",
+			args: args{
+				data: 42,
+			},
+			wantErr: true,
+		},
+		{
+			name: "String",
+			args: args{
+				data: "<p>Hello, World!</p>",
+			},
+			wantErr: false,
+		},
+		{
+			name: "String",
+			args: args{
+				data: []byte("<p>Hello, World!</p>"),
+			},
+			wantErr: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			c, _ := telegraph.NewClient()
+			gotN, err := c.ContentFormat(tt.args.data)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("client.ContentFormat() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if (gotN == nil) != tt.wantErr {
+				t.Errorf("client.ContentFormat() returns nil")
+			}
 		})
-		t.Run("bytes", func(t *testing.T) {
-			validContentDOM, err := telegraph.ContentFormat([]byte(`<p>Hello, World!</p>`))
-			assert.NoError(t, err)
-			assert.NotEmpty(t, validContentDOM)
-		})
-	})
+	}
 }
