@@ -1,14 +1,22 @@
 # Golang library for Telegraph API
+
+[![codecov](https://codecov.io/gh/TechMinerApps/telegraph/branch/main/graph/badge.svg?token=DWO6DPMEHM)](https://codecov.io/gh/TechMinerApps/telegraph)
+
 > This project is just to provide a wrapper around the API without any additional features.
 
 Caution! This library is under refactoring, interface may change.
 
 ## Start using telegraph
 Download and install it:
-`$ go get -u github.com/TechMinerApps/telegraph`
+
+```
+$ go get -u github.com/TechMinerApps/telegraph
+```
 
 Import it in your code:
-`import "github.com/TechMinerApps/telegraph"`
+```
+import "github.com/TechMinerApps/telegraph"
+```
 
 
 ## Credit
