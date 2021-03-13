@@ -24,4 +24,6 @@ Original developer: [@toby3d](https://gitlab.com/toby3d/telegraph)
 
 ## License
 
+This Project is licensed under MIT License
+
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FTechMinerApps%2Ftelegraph.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FTechMinerApps%2Ftelegraph?ref=badge_large)
