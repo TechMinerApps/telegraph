@@ -7,9 +7,9 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestEditPage(t *testing.T) {
+func Test_client_EditPage(t *testing.T) {
 
-	t.Run("invalid", func(t *testing.T) {
+	t.Run("Invalid", func(t *testing.T) {
 		c := telegraph.NewClient()
 		content, err := c.ContentFormat("<p>Hello, world!</p>")
 		assert.NoError(t, err)
@@ -21,7 +21,7 @@ func TestEditPage(t *testing.T) {
 		}, true)
 		assert.Error(t, err)
 	})
-	t.Run("valid", func(t *testing.T) {
+	t.Run("Valid", func(t *testing.T) {
 		c, err := telegraph.NewClientWithToken("b968da509bb76866c35425099bc0989a5ec3b32997d55286c657e6994bbb")
 		assert.NoError(t, err)
 		content, err := c.ContentFormat("<p>Hello, world!</p>")
