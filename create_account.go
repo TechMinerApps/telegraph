@@ -31,5 +31,7 @@ func (c *client) CreateAccount(account Account) (*Account, error) {
 		return nil, err
 	}
 
+	c.account = result
+
 	return result, nil
 }

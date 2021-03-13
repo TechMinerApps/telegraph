@@ -3,18 +3,19 @@ package telegraph_test
 import (
 	"testing"
 
+	"github.com/TechMinerApps/telegraph"
 	"github.com/stretchr/testify/assert"
-	"gitlab.com/toby3d/telegraph"
 )
 
-func TestRevokeAccessToken(t *testing.T) {
-	t.Run("invalid", func(t *testing.T) {
-		var account telegraph.Account
-		_, err := account.RevokeAccessToken()
+func Test_client_RevokeAccessToken(t *testing.T) {
+	t.Run("Invalid", func(t *testing.T) {
+		c := telegraph.NewClient()
+		_, err := c.RevokeAccessToken()
 		assert.Error(t, err)
 	})
-	t.Run("valid", func(t *testing.T) {
-		a, err := telegraph.CreateAccount(telegraph.Account{
+	t.Run("Valid", func(t *testing.T) {
+		c := telegraph.NewClient()
+		_, err := c.CreateAccount(telegraph.Account{
 			ShortName:  "Sandbox",
 			AuthorName: "Anonymous",
 		})
@@ -22,11 +23,11 @@ func TestRevokeAccessToken(t *testing.T) {
 			t.FailNow()
 		}
 
-		newAccount, err := a.RevokeAccessToken()
+		newAccount, err := c.RevokeAccessToken()
 		if !assert.NoError(t, err) {
 			t.FailNow()
 		}
-		assert.NotEqual(t, a.AccessToken, newAccount.AccessToken)
+		assert.NotEqual(t, c.Account().AccessToken, newAccount.AccessToken)
 		assert.NotEmpty(t, newAccount.AuthURL)
 	})
 }

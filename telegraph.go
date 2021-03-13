@@ -68,6 +68,7 @@ type Client interface {
 	ContentFormat(data interface{}) (n []Node, err error)
 
 	// CreateAccount is used to create a new account using provided info
+	// It alse set the account info stored in client
 	CreateAccount(account Account) (*Account, error)
 
 	// CreatePage use the account info stored within client to create a new page
