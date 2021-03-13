@@ -3,18 +3,19 @@ package telegraph_test
 import (
 	"testing"
 
+	"github.com/TechMinerApps/telegraph"
 	"github.com/stretchr/testify/assert"
-	"gitlab.com/toby3d/telegraph"
 )
 
 func TestCreateAccount(t *testing.T) {
-	t.Run("invalid", func(t *testing.T) {
-		t.Run("nil", func(t *testing.T) {
-			_, err := telegraph.CreateAccount(telegraph.Account{})
+	c := telegraph.NewClient()
+	t.Run("Invalid", func(t *testing.T) {
+		t.Run("Nil", func(t *testing.T) {
+			_, err := c.CreateAccount(telegraph.Account{})
 			assert.Error(t, err)
 		})
-		t.Run("without shortname", func(t *testing.T) {
-			_, err := telegraph.CreateAccount(telegraph.Account{
+		t.Run("Without shortname", func(t *testing.T) {
+			_, err := c.CreateAccount(telegraph.Account{
 				ShortName:  "",
 				AuthorName: "Anonymous",
 			})
@@ -22,7 +23,7 @@ func TestCreateAccount(t *testing.T) {
 		})
 	})
 	t.Run("valid", func(t *testing.T) {
-		account, err := telegraph.CreateAccount(telegraph.Account{
+		account, err := c.CreateAccount(telegraph.Account{
 			ShortName:  "Sandbox",
 			AuthorName: "Anonymous",
 		})
