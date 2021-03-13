@@ -95,6 +95,12 @@ type Client interface {
 
 	// RevokeAccessToken is used when accesstoken is compromises
 	RevokeAccessToken() (*Account, error)
+
+	// SetSocksProxy
+	SetSocksProxy(proxy string)
+
+	// SetHTTPProxy
+	SetHTTPProxy(proxy string)
 }
 
 type client struct {
