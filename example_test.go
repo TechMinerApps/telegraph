@@ -4,7 +4,7 @@ import (
 	"log"
 	"time"
 
-	"gitlab.com/toby3d/telegraph"
+	"github.com/TechMinerApps/telegraph"
 )
 
 // Content in a string format (for this example).
@@ -23,9 +23,9 @@ const data = `
 `
 
 var (
-	account *telegraph.Account //nolint:gochecknoglobals
-	page    *telegraph.Page    //nolint:gochecknoglobals
-	content []telegraph.Node   //nolint:gochecknoglobals
+	account *telegraph.Account
+	page    *telegraph.Page
+	content []telegraph.Node
 )
 
 func errCheck(err error) {
@@ -44,7 +44,8 @@ func Example_fastStart() {
 		AuthorName: "Maxim Lebedev",       // optional
 		AuthorURL:  "https://t.me/toby3d", // optional
 	}
-	account, err = telegraph.CreateAccount(requisites)
+	client := telegraph.NewClient()
+	account, err = client.CreateAccount(requisites)
 	errCheck(err)
 
 	// Make sure that you have saved acc.AuthToken for create new pages or make
@@ -52,7 +53,7 @@ func Example_fastStart() {
 
 	// Format content to []telegraph.Node array. Input data can be string, []byte
 	// or io.Reader.
-	content, err = telegraph.ContentFormat(data)
+	content, err = client.ContentFormat(data)
 	errCheck(err)
 
 	// Boom!.. And your text will be understandable for Telegraph. MAGIC.
@@ -66,16 +67,17 @@ func Example_fastStart() {
 		AuthorName: account.AuthorName, // optional
 		AuthorURL:  account.AuthorURL,  // optional
 	}
-	page, err = account.CreatePage(pageData, false)
+	page, err = client.CreatePage(pageData, false)
 	errCheck(err)
 
 	// Show link from response on created page.
 	log.Println("Kaboom! Page created, look what happened:", page.URL)
 }
 
-func ExampleCreateAccount() {
+func Example_createAccount() {
 	var err error
-	account, err = telegraph.CreateAccount(telegraph.Account{
+	client := telegraph.NewClient()
+	account, err = client.CreateAccount(telegraph.Account{
 		ShortName:  "Sandbox",
 		AuthorName: "Anonymous",
 	})
@@ -87,9 +89,10 @@ func ExampleCreateAccount() {
 	log.Println("AuthorName:", account.AuthorName)
 }
 
-func ExampleAccount_EditAccountInfo() {
+func Example_editAccountInfo() {
 	var err error
-	account, err = account.EditAccountInfo(telegraph.Account{
+	client := telegraph.NewClient()
+	account, err = client.EditAccountInfo(telegraph.Account{
 		ShortName:  "Sandbox",
 		AuthorName: "Anonymous",
 	})
@@ -100,8 +103,9 @@ func ExampleAccount_EditAccountInfo() {
 	log.Println("AuthorName:", account.AuthorName)
 }
 
-func ExampleAccount_GetAccountInfo() {
-	info, err := account.GetAccountInfo(
+func Example_getAccountInfo() {
+	client := telegraph.NewClient()
+	info, err := client.GetAccountInfo(
 		telegraph.FieldShortName,
 		telegraph.FieldPageCount,
 	)
@@ -111,18 +115,20 @@ func ExampleAccount_GetAccountInfo() {
 	log.Println("PageCount:", info.PageCount, "pages")
 }
 
-func ExampleAccount_RevokeAccessToken() {
+func Example_revokeAccessToken() {
 	var err error
+	client := telegraph.NewClient()
 	// You must rewrite current variable with account structure for further usage.
-	account, err = account.RevokeAccessToken()
+	account, err = client.RevokeAccessToken()
 	errCheck(err)
 
 	log.Println("AccessToken:", account.AccessToken)
 }
 
-func ExampleAccount_CreatePage() {
+func Example_createPage() {
 	var err error
-	page, err = account.CreatePage(telegraph.Page{
+	client := telegraph.NewClient()
+	page, err = client.CreatePage(telegraph.Page{
 		Title:      "Sample Page",
 		AuthorName: account.AuthorName,
 		Content:    content,
@@ -133,9 +139,11 @@ func ExampleAccount_CreatePage() {
 	log.Println("PageURL:", page.URL)
 }
 
-func ExampleAccount_EditPage() {
+func Example_editPage() {
 	var err error
-	page, err = account.EditPage(telegraph.Page{
+
+	client := telegraph.NewClient()
+	page, err = client.EditPage(telegraph.Page{
 		Title:      "Sample Page",
 		AuthorName: account.AuthorName,
 		Content:    content,
@@ -146,8 +154,9 @@ func ExampleAccount_EditPage() {
 	log.Println("PageURL:", page.URL)
 }
 
-func ExampleGetPage() {
-	info, err := telegraph.GetPage("Sample-Page-12-15", true)
+func Example_getPage() {
+	client := telegraph.NewClient()
+	info, err := client.GetPage("Sample-Page-12-15", true)
 	errCheck(err)
 
 	log.Println("Getted info about", info.Path, "page:")
@@ -156,8 +165,9 @@ func ExampleGetPage() {
 	log.Println("CanEdit:", info.CanEdit)
 }
 
-func ExampleAccount_GetPageList() {
-	list, err := account.GetPageList(0, 3)
+func Example_getPageList() {
+	client := telegraph.NewClient()
+	list, err := client.GetPageList(0, 3)
 	errCheck(err)
 
 	log.Println("Getted", list.TotalCount, "pages")
@@ -168,16 +178,17 @@ func ExampleAccount_GetPageList() {
 	}
 }
 
-func ExampleGetViews() {
+func Example_getViews() {
+	client := telegraph.NewClient()
 	pagePath := "Sample-Page-12-15"
 	dateTime := time.Date(2016, time.December, 0, 0, 0, 0, 0, time.UTC)
-	views, err := telegraph.GetViews(pagePath, dateTime)
+	views, err := client.GetViews(pagePath, dateTime)
 	errCheck(err)
 
 	log.Println(pagePath, "has been viewed", views.Views, "times")
 }
 
-func ExampleContentFormat() {
+func Example_contentFormat() {
 	const data = `<figure>
 <img src="http://telegra.ph/file/6a5b15e7eb4d7329ca7af.jpg" /></figure>
 <p><i>Hello</i>, my name is <b>Page</b>, <u>look at me</u>!</p>
@@ -186,7 +197,8 @@ func ExampleContentFormat() {
 </figure>`
 
 	var err error
-	content, err = telegraph.ContentFormat(data)
+	client := telegraph.NewClient()
+	content, err = client.ContentFormat(data)
 	errCheck(err)
 
 	log.Printf("Content: %#v", content)
