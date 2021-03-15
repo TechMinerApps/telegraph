@@ -34,7 +34,7 @@ func errCheck(err error) {
 	}
 }
 
-func Example_fastStart() {
+func Example_quickStart() {
 	var err error
 	// Create new Telegraph account.
 	requisites := telegraph.Account{
